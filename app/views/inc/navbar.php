@@ -1,4 +1,4 @@
-<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary mb-3" data-bs-theme="dark">
+<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <div class="container">
     <a class="navbar-brand" href="<?= URLROOT; ?>"><?= SITENAME; ?></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,7 +10,7 @@
           <a class="nav-link active" aria-current="page" href="<?= URLROOT; ?>">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Recent News</a>
+          <a class="nav-link" href="<?= URLROOT; ?>/posts">Opini</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?= URLROOT; ?>/pages/about">About</a>
@@ -22,6 +22,11 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Welcome <?= $_SESSION['user_name']; ?></a>
           </li>
+          <?php if($_SESSION['admin'] == 1) : ?>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= URLROOT; ?>/admin">Admin</a>
+          </li>
+          <?php endif; ?>
           <li class="nav-item">
             <a class="nav-link" href="<?= URLROOT; ?>/users/logout">Logout</a>
           </li>

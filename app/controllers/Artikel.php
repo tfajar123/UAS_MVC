@@ -1,27 +1,21 @@
 <?php
-    class Posts extends Controller {
+    class Artikel extends Controller {
         public function __construct() {
             /*//Jika belum login, halaman posts tidak bisa dilihat
             if(!isLoggedIn()){ //fungsi berada di Session helper
                 redirect('users/login');
             }*/
-
-
-            $this->postModel = $this->model('Post');
+            $this->newsModel = $this->model('News');
             $this->userModel = $this->model('User');
-            
-        }
-        public function index(){
-            //Get Posts
-            $posts = $this->postModel->getPosts();
-            $data = [
-                'posts' => $posts
-
-            ];
-            $this->view('posts/index', $data);
         }
 
-        public function add(){
+        public function index ()
+        {
+            //redirect('');
+            $this->view('artikel/index');
+        }
+
+        public function add() {
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // Sanitize POST array
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -44,24 +38,35 @@
 
                 //memastikan tidak ada error
                 if(empty($data['title_err']) && empty($data['body_err'])){
-                    if($this->postModel->addPost($data)){
-                        flash('post_message', 'Post Ditambahkan');
-                        redirect('posts');
+                    if($this->newsModel->addNews($data)){
+                        flash('post_message', 'Artikel telah Ditambahkan');
+                        redirect('admin/news');
                     }else{
                         die('Ada yang salah! Silahkan coba lagi!');
                     }
                 } else {
-                    $this->view('posts/add', $data);
+                    $this->view('artikel/add', $data);
                 }
             }else{
                 $data = [
                     'title' => '',
                     'body' => ''
-    
                 ];
-                $this->view('posts/add', $data);
+                $this->view('artikel/add', $data);
             }
         }
+        public function show($id){
+            $news = $this->newsModel->getNewsById($id);
+            $user = $this->userModel->getUserById($news->user_id);
+            $currentURL = $this->getCurrentPageURL();
+            $data = [
+                'news' => $news,
+                'user' => $user,
+                'currentURL' => $currentURL
+            ];
+            $this->view('artikel/show', $data);
+        }
+
         public function edit($id){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // Sanitize POST array
@@ -86,61 +91,48 @@
 
                 //memastikan tidak ada error
                 if(empty($data['title_err']) && empty($data['body_err'])){
-                    if($this->postModel->updatePost($data)){
-                        flash('post_message', 'Post Diedit!');
-                        redirect('posts');
+                    if($this->newsModel->updateNews($data)){
+                        flash('post_message', 'Artikel Diedit!');
+                        redirect('admin/news');
                     }else{
                         die('Ada yang salah! Silahkan coba lagi!');
                     }
                 } else {
-                    $this->view('posts/edit', $data);
+                    $this->view('artikel/edit', $data);
                 }
             }else{
                 //cek post
-                $post = $this->postModel->getPostById($id);
+                $news = $this->newsModel->getNewsById($id);
                 //cek user
-                if($post->user_id != $_SESSION['user_id']){
-                    redirect('posts');
+                if($news->user_id != $_SESSION['user_id']){
+                    redirect('admin/news');
                 }
                 $data = [
                     'id' => $id,
-                    'title' => $post->title,
-                    'body' => $post->body
+                    'title' => $news->title,
+                    'body' => $news->body
     
                 ];
-                $this->view('posts/edit', $data);
+                $this->view('artikel/edit', $data);
             }
         }
-
-        public function show($id){
-            $post = $this->postModel->getPostById($id);
-            $user = $this->userModel->getUserById($post->user_id);
-            $currentURL = $this->getCurrentPageURL();
-            $data = [
-                'post' => $post,
-                'user' => $user,
-                'currentURL' => $currentURL
-            ];
-            $this->view('posts/show', $data);
-        }
-
         public function delete($id){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 //cek post
-                $post = $this->postModel->getPostById($id);
+                $news = $this->newsModel->getNewsById($id);
                 //cek user
-                if($post->user_id != $_SESSION['user_id']){
-                    redirect('posts');
+                if($news->user_id != $_SESSION['user_id']){
+                    redirect('admin/news');
                 }
                 
-                if($this->postModel->deletePost($id)){
+                if($this->newsModel->deleteNews($id)){
                     flash('post_message', 'Post dihapus!');
-                    redirect('posts');
+                    redirect('admin/news');
                 } else {
                     die('Ada yang salah! silahkan coba lagi!');
                 }
             } else {
-                redirect('posts');
+                redirect('admin/news');
             }
         }
         // Fungsi untuk mendapatkan URL halaman saat ini

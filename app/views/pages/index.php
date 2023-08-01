@@ -12,14 +12,14 @@
             <h1>Recent News</h1>
         </div>
     </div>
-    <?php foreach($data['post'] as $post) : ?>
+    <?php foreach($data['news'] as $new) : ?>
         <div class="card card-body mb-3">
-            <h4 class="card-title"><?= $post->title; ?></h4>
+            <h4 class="card-title"><?= $new->title; ?></h4>
             <div class="bg-light p-2 mb-3">
-                Ditulis oleh <?= $post->name; ?> pada <?= $post->postCreated; ?>
+                Ditulis oleh <?= $new->name; ?> pada <?= $new->newCreated; ?>
             </div>
-            <p class="card-text"><?= substr($post->body, 0, 250) . "..."; ?></p>
-            <a href="<?= URLROOT; ?>/posts/show/<?= $post->postId; ?>" class="btn btn-dark">Selengkapnya</a>
+            <p class="card-text"><?= substr($new->body, 0, 250) . "..."; ?></p>
+            <a href="<?= URLROOT; ?>/artikel/show/<?= $new->newsId; ?>" class="btn btn-dark">Selengkapnya</a>
         </div>
     <?php endforeach; ?>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

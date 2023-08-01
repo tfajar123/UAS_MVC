@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?= URLROOT; ?>/assets/css/bootstrap.css">
     <script src="https://kit.fontawesome.com/40683a94db.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php require APPROOT . '/views/inc/navbar.php'; ?>
     <div class="container">
         

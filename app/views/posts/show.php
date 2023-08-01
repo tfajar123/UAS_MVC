@@ -17,13 +17,13 @@
             </a>
         </div>
     </div>
-
     
+
     <div class="bg-secondary text-white p-2 mb-3">
         Ditulis oleh <?= $data['user']->name; ?> pada <?= $data['post']->created_at; ?>
     </div>
-    <p><?= $data['post']->body; ?></p>
-
+    <p class="mt-3"><?= nl2br($data['post']->body);?></p> <!-- Fungsi dari nl2br adalah untuk memisah paragraf body yang diambil dari database -->
+    <?php if (isset($_SESSION['user_id'])) : ?>
     <?php if($data['post']->user_id == $_SESSION['user_id']) : ?>
         <hr>
         <div class="row mt-4">
@@ -36,5 +36,6 @@
                 </form>
             </div>
         </div>
+    <?php endif; ?>
     <?php endif; ?>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

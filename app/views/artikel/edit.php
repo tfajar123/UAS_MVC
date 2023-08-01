@@ -1,10 +1,10 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
-    <a href="<?= URLROOT; ?>/posts" class="btn btn-light"><i class="fa fa-backward mx-1"></i>Kembali</a>
+    <a href="<?= URLROOT; ?>/admin/news" class="btn btn-light"><i class="fa fa-backward mx-1"></i>Kembali</a>
     <div class="card card-body bg-light mt-5">
         <div class="mx-4 py-4">
-            <h2>Edit Post</h2>
-            <p>Silahkan edit postingan anda</p>
-            <form action="<?= URLROOT; ?>/posts/edit/<?= $data['id']; ?>" method="post">
+            <h2>Edit Artikel</h2>
+            <p>Silahkan edit Artikel</p>
+            <form action="<?= URLROOT; ?>/artikel/edit/<?= $data['id']; ?>" method="post">
                 <div class="form-group">
                     <label for="title">Judul : <sup>*</sup></label>
                     <input type="text" name="title" class="form-control form-control-lg <?php echo (!empty($data['title_err'])) ? 'is-invalid' : ''; ?>" value="<?= $data['title']; ?>">
