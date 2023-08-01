@@ -2,16 +2,19 @@
     class Pages extends Controller {
         public function __construct(){
 
+            $this->postModel = $this->model('Post');
+            $this->userModel = $this->model('User');
         }
 
         public function index(){
             if(isLoggedIn()){
                 redirect('posts');
             }
-
+            $post = $this->postModel->getPosts();
             $data = [
                 'title' => 'EFG News',
-                'description' => 'Simple Webpages Network built on the EFG News Framework'
+                'description' => 'Simple Webpages Network built on the EFG News Framework',
+                'post' => $post
             ];
 
             $this->view('pages/index', $data);
